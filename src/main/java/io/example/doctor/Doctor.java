@@ -1,5 +1,6 @@
-package io.example.data.jpa;
+package io.example.doctor;
 
+import io.example.schedule.Schedule;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 /**

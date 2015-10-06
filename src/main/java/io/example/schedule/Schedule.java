@@ -1,10 +1,11 @@
-package io.example.data.jpa;
+package io.example.schedule;
 
+import io.example.doctor.Doctor;
+import io.example.patient.Patient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.NaturalId;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
@@ -13,7 +14,6 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 
 /**
  * Created by gmind on 2015-10-05.

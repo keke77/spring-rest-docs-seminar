@@ -1,11 +1,10 @@
-package io.example.web;
+package io.example.doctor;
 
-import io.example.data.jpa.Doctor;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static io.example.web.DoctorResourceAssembler.DoctorResource;
+import static io.example.doctor.DoctorResourceAssembler.DoctorResource;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 /**
  * Created by gmind on 2015-10-05.

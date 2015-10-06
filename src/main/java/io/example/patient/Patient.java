@@ -1,5 +1,6 @@
-package io.example.data.jpa;
+package io.example.patient;
 
+import io.example.schedule.Schedule;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

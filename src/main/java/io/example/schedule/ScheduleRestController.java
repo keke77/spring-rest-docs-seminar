@@ -1,7 +1,5 @@
-package io.example.web;
+package io.example.schedule;
 
-import io.example.data.jpa.Schedule;
-import io.example.data.jpa.ScheduleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import static io.example.web.ScheduleResourceAssembler.ScheduleResource;
+import static io.example.schedule.ScheduleResourceAssembler.ScheduleResource;
 
 /**
  * Created by gmind on 2015-10-05.

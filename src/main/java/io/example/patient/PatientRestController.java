@@ -1,10 +1,7 @@
-package io.example.web;
+package io.example.patient;
 
-import io.example.data.jpa.Doctor;
-import io.example.data.jpa.DoctorJpaRepository;
-import io.example.data.jpa.Patient;
-import io.example.data.jpa.PatientJpaRepository;
-import io.example.web.hateoas.NestedContentResource;
+import io.example.schedule.ScheduleResourceAssembler;
+import io.example.common.NestedContentResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static io.example.web.PatientResourceAssembler.PatientResource;
-import static io.example.web.ScheduleResourceAssembler.ScheduleResource;
+import static io.example.patient.PatientResourceAssembler.PatientResource;
+import static io.example.schedule.ScheduleResourceAssembler.ScheduleResource;
 
 /**
  * Created by gmind on 2015-10-05.

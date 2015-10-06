@@ -1,11 +1,10 @@
-package io.example.web;
+package io.example.schedule;
 
-import io.example.data.jpa.Schedule;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static io.example.web.ScheduleResourceAssembler.ScheduleResource;
+import static io.example.schedule.ScheduleResourceAssembler.ScheduleResource;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**

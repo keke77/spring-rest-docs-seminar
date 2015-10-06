@@ -1,4 +1,4 @@
-package io.example.web.hateoas;
+package io.example.common;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import org.springframework.hateoas.ResourceSupport;
