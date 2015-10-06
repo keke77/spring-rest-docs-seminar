@@ -74,7 +74,8 @@ test {
 }
 
 asciidoctor {
-    backends  'html5'
+    backends  'html5',
+              'pdf'
     sourceDir 'src/main/asciidoc'
     attributes 'snippets': snippetsDir,
             'icons': 'font',
