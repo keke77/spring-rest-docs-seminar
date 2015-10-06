@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TestIndexRestController extends TestBootConfig {
 
     @Test
-    public void indexExample() throws Exception {
+    public void index() throws Exception {
         this.document.snippets(
                 links(
                         linkWithRel("doctors").description("The <<resources-doctors,Doctors resource>>"),

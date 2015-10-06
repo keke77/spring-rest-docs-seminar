@@ -72,18 +72,16 @@ test {
 }
 
 asciidoctor {
-    backends   'html5',
-               'pdf'
+    backends  'html5'
     sourceDir 'src/main/asciidoc'
     attributes 'snippets': snippetsDir,
-               'stylesheet' : 'static/css/nanum.css',
-               'icons': 'font',
-               'setanchors':'true',
-               'idprefix':'',
-               'idseparator':'-',
-               'doctype': 'book',
-               'docinfo1':'true',
-               'source-highlighter': 'highlightjs'
+            'icons': 'font',
+            'setanchors':'true',
+            'idprefix':'',
+            'idseparator':'-',
+            'doctype': 'book',
+            'docinfo1':'true',
+            'source-highlighter': 'highlightjs'
     inputs.dir snippetsDir
     dependsOn test
 }

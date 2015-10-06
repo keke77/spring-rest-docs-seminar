@@ -43,7 +43,7 @@ public class TestBootConfig {
 
     @Before
     public void setUp() {
-        this.document = document("{method_name}/{step}/",
+        this.document = document("{method-name}",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()));
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
