@@ -1,0 +1,4 @@
+== spring-rest-docs-seminar
+
+
+http://danhyun.github.io/asciidoctor-gradle-examples/
