@@ -60,7 +60,7 @@ public class ScheduleRestController {
     public void update(@PathVariable("id") Long id, @RequestBody ScheduleInput scheduleInput) {
         Schedule source  = this.autoMapper.map(scheduleInput, Schedule.class);
         Schedule target  = this.scheduleJpaRepository.findOne(id);
-        Schedule mapping = autoMapper.map(source, target, Schedule.class);
+        Schedule mapping = this.autoMapper.map(source, target, Schedule.class);
         this.scheduleJpaRepository.save(mapping);
     }
 
