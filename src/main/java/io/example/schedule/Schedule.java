@@ -2,11 +2,12 @@ package io.example.schedule;
 
 import io.example.doctor.Doctor;
 import io.example.patient.Patient;
+import io.example.common.AbstractPersistable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +27,10 @@ import java.time.LocalTime;
 public class Schedule extends AbstractPersistable<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public Schedule(Long id) {
+        this.setId(id);
+    }
 
     @Column(nullable = false)
     private LocalDate day;

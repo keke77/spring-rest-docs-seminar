@@ -1,11 +1,12 @@
 package io.example.patient;
 
 import io.example.schedule.Schedule;
+import io.example.common.AbstractPersistable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +26,10 @@ import java.util.List;
 public class Patient extends AbstractPersistable<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public Patient(Long id) {
+        this.setId(id);
+    }
 
     @Column(nullable = false)
     private String name;

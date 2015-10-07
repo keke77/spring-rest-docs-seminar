@@ -15,43 +15,33 @@ public class AutoMapper extends ModelMapper {
 
 	private static Map<Class, PropertyDescriptor[]> descriptorsMap = new HashMap<Class, PropertyDescriptor[]>();
 
-	public <D> D map(Object originalObject, Object updateObject, Class<D> destinationType) {
+	public <D> D map(Object sourceObject, Object targetObject, Class<D> destinationType) {
 		Object resultObject = null;
 		try {
-			if (originalObject == null || updateObject == null) {
-				throw new NullPointerException("A null paramter was passed into updateObject");
+			if (sourceObject == null || targetObject == null) {
+				throw new NullPointerException("A null paramter was passed into targetObject");
 			}
-			resultObject = updateObject.getClass().newInstance();
-			Class orignalClass = originalObject.getClass();
-			Class updateClass = updateObject.getClass();
-			if (!orignalClass.equals(updateClass)) {
+			resultObject = targetObject.getClass().newInstance();
+			Class sourceClass = sourceObject.getClass();
+			Class targetClass = targetObject.getClass();
+			if (!sourceClass.equals(targetClass)) {
 				throw new IllegalArgumentException("Received parameters are not the same type of class, but must be");
 			}
 
-			PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(orignalClass);
+			PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(targetClass);
 			if (descriptors == null) {
-				descriptors = PropertyUtils.getPropertyDescriptors(orignalClass);
-				descriptorsMap.put(orignalClass, descriptors);
+				descriptors = PropertyUtils.getPropertyDescriptors(targetClass);
+				descriptorsMap.put(targetClass, descriptors);
 			}
 
 			for (PropertyDescriptor descriptor : descriptors) {
-				if (PropertyUtils.isReadable(originalObject, descriptor.getName()) && PropertyUtils.isWriteable(originalObject,
-					descriptor.getName())) {
+				if (PropertyUtils.isReadable(targetObject, descriptor.getName()) && PropertyUtils.isWriteable(targetObject,	descriptor.getName())) {
 					Method readMethod = descriptor.getReadMethod();
-					Object originalValue = readMethod.invoke(originalObject);
-					Object updateValue = readMethod.invoke(updateObject);
-					Object resultValue = originalValue;
-					if (originalValue == null || originalValue == updateValue) {
-						resultValue = updateValue;
-					}
-					if (originalValue instanceof String) {
-						if (StringUtils.isEmpty((String)originalValue)) {
-							resultValue = updateValue;
-						}
-					} else if (originalValue instanceof Number) {
-						if (NumberUtils.createNumber((Number)originalValue + "").intValue() == 0) {
-							resultValue = updateValue;
-						}
+					Object sourceValue = readMethod.invoke(sourceObject);
+					Object targetValue = readMethod.invoke(targetObject);
+					Object resultValue = targetValue;
+					if (sourceValue != null || sourceValue == targetValue) {
+						resultValue = sourceValue;
 					}
 					Method writeMethod = descriptor.getWriteMethod();
 					writeMethod.invoke(resultObject, resultValue);

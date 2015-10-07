@@ -1,7 +1,8 @@
 package io.example.doctor;
 
-import io.example.schedule.ScheduleResourceAssembler;
 import io.example.common.NestedContentResource;
+import io.example.config.mapper.AutoMapper;
+import io.example.schedule.ScheduleResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static io.example.doctor.DoctorResourceAssembler.DoctorResource;
 import static io.example.schedule.ScheduleResourceAssembler.ScheduleResource;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 /**
  * Created by gmind on 2015-10-05.
@@ -39,6 +40,9 @@ public class DoctorRestController {
     @Autowired
     private PagedResourcesAssembler pagedResourcesAssembler;
 
+    @Autowired
+    private AutoMapper autoMapper;
+
     @RequestMapping(method = RequestMethod.GET)
     public PagedResources<DoctorResource> showAll(@PageableDefault Pageable pageable) {
         Page<Doctor> doctors = this.doctorJpaRepository.findAll(pageable);
@@ -52,19 +56,24 @@ public class DoctorRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.PUT)
-    public HttpHeaders create(@RequestBody Doctor doctorInput) {
+    public HttpHeaders create(@RequestBody DoctorInput doctorInput) {
+        Doctor mapping = autoMapper.map(doctorInput, Doctor.class);
+        Doctor entity  = this.doctorJpaRepository.save(mapping);
         HttpHeaders httpHeaders = new HttpHeaders();
-        //httpHeaders.setLocation(linkTo(DoctorRestController.class).slash(note.getId()).toUri());
+        httpHeaders.setLocation(linkTo(DoctorRestController.class).slash(entity.getId()).toUri());
         return httpHeaders;
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
-    public void update(@PathVariable("id") Long id, @RequestBody Doctor doctorInput) {
-        Doctor doctor = this.doctorJpaRepository.findOne(id);
-        this.doctorJpaRepository.save(doctorInput);
+    public void update(@PathVariable("id") Long id, @RequestBody DoctorInput doctorInput) {
+        Doctor source  = autoMapper.map(doctorInput, Doctor.class);
+        Doctor target  = this.doctorJpaRepository.findOne(id);
+        Doctor mapping = autoMapper.map(source, target, Doctor.class);
+        this.doctorJpaRepository.save(mapping);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void  delete(@PathVariable("id") Long id) {
         this.doctorJpaRepository.delete(id);
