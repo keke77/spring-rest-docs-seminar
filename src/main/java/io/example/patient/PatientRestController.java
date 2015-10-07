@@ -57,7 +57,7 @@ public class PatientRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.PUT)
     public HttpHeaders create(@RequestBody PatientInput patientInput) {
-        Patient mapping = autoMapper.map(patientInput, Patient.class);
+        Patient mapping = this.autoMapper.map(patientInput, Patient.class);
         Patient entity  = this.patientJpaRepository.save(mapping);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(linkTo(PatientRestController.class).slash(entity.getId()).toUri());
@@ -67,9 +67,9 @@ public class PatientRestController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     public void update(@PathVariable("id") Long id, @RequestBody PatientInput patientInput) {
-        Patient source  = autoMapper.map(patientInput, Patient.class);
+        Patient source  = this.autoMapper.map(patientInput, Patient.class);
         Patient target  = this.patientJpaRepository.findOne(id);
-        Patient mapping = autoMapper.map(source, target, Patient.class);
+        Patient mapping = this.autoMapper.map(source, target, Patient.class);
         this.patientJpaRepository.save(mapping);
     }
 

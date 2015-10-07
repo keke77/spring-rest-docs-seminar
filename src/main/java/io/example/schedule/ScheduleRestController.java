@@ -48,7 +48,7 @@ public class ScheduleRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.PUT)
     public HttpHeaders create(@RequestBody ScheduleInput scheduleInput) {
-        Schedule mapping = autoMapper.map(scheduleInput, Schedule.class);
+        Schedule mapping = this.autoMapper.map(scheduleInput, Schedule.class);
         Schedule entity  = this.scheduleJpaRepository.save(mapping);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(linkTo(ScheduleRestController.class).slash(entity.getId()).toUri());
@@ -58,7 +58,7 @@ public class ScheduleRestController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     public void update(@PathVariable("id") Long id, @RequestBody ScheduleInput scheduleInput) {
-        Schedule source  = autoMapper.map(scheduleInput, Schedule.class);
+        Schedule source  = this.autoMapper.map(scheduleInput, Schedule.class);
         Schedule target  = this.scheduleJpaRepository.findOne(id);
         Schedule mapping = autoMapper.map(source, target, Schedule.class);
         this.scheduleJpaRepository.save(mapping);
