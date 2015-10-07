@@ -16,7 +16,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class AbstractPersistable<PK extends Serializable> implements Persistable<PK> {
 
-    private static final long serialVersionUID = -5554308939380869754L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue

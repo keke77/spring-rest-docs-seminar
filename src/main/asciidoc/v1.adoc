@@ -28,8 +28,8 @@ include::overview/overview-cors.adoc[]
 include::overview/overview-json-p-callbacks.adoc[]
 include::overview/overview-timezones.adoc[]
 
-[[activity]]
-== Activity
+[[resources]]
+== Resources
 
-include::activity/activity-index.adoc[]
+include::resources/resources-index.adoc[]
 
