@@ -1,6 +1,8 @@
 package io.example.schedule;
 
 import io.example.config.mapper.AutoMapper;
+import io.example.doctor.Doctor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +44,8 @@ public class ScheduleRestController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Resource<Schedule> showOne(@PathVariable("id") Long id) {
-        return this.scheduleResourceAssembler.toResource(this.scheduleJpaRepository.findOne(id));
+        Schedule entity = this.scheduleJpaRepository.findOne(id);
+        return this.scheduleResourceAssembler.toResource(ObjectUtils.defaultIfNull(entity, new Schedule()));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -55,7 +58,7 @@ public class ScheduleRestController {
         return httpHeaders;
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     public void update(@PathVariable("id") Long id, @RequestBody ScheduleInput scheduleInput) {
         Schedule source  = this.autoMapper.map(scheduleInput, Schedule.class);

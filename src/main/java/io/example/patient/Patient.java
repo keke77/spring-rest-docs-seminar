@@ -1,5 +1,7 @@
 package io.example.patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.example.common.LocalDateToDateConverter;
 import io.example.schedule.Schedule;
 import io.example.common.AbstractPersistable;
 
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
@@ -35,8 +38,10 @@ public class Patient extends AbstractPersistable<Long> implements Serializable {
     private String name;
 
     @Column(nullable = false)
-    private LocalDate birthDay;
+    @Convert(converter = LocalDateToDateConverter.class)
+    private LocalDate birthDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     private List<Schedule> schedules;
 }

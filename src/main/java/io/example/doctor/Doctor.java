@@ -1,5 +1,7 @@
 package io.example.doctor;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.example.schedule.Schedule;
 import io.example.common.AbstractPersistable;
 
@@ -33,6 +35,7 @@ public class Doctor extends AbstractPersistable<Long> implements Serializable {
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "doctor")
     private List<Schedule> schedules;
 

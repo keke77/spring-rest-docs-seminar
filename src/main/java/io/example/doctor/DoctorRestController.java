@@ -3,6 +3,7 @@ package io.example.doctor;
 import io.example.common.NestedContentResource;
 import io.example.config.mapper.AutoMapper;
 import io.example.schedule.ScheduleResourceAssembler;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +52,8 @@ public class DoctorRestController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Resource<Doctor> showOne(@PathVariable("id") Long id) {
-        return this.doctorResourceAssembler.toResource(this.doctorJpaRepository.findOne(id));
+        Doctor entity = this.doctorJpaRepository.findOne(id);
+        return this.doctorResourceAssembler.toResource(ObjectUtils.defaultIfNull(entity, new Doctor()));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -64,7 +66,7 @@ public class DoctorRestController {
         return httpHeaders;
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
     public void update(@PathVariable("id") Long id, @RequestBody DoctorInput doctorInput) {
         Doctor source  = this.autoMapper.map(doctorInput, Doctor.class);

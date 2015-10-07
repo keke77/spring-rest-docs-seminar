@@ -1,5 +1,8 @@
 package io.example.schedule;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.example.common.LocalDateToDateConverter;
+import io.example.common.LocalTimeToTimeConverter;
 import io.example.doctor.Doctor;
 import io.example.patient.Patient;
 import io.example.common.AbstractPersistable;
@@ -8,10 +11,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.convert.JodaTimeConverters;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -33,20 +35,22 @@ public class Schedule extends AbstractPersistable<Long> implements Serializable 
     }
 
     @Column(nullable = false)
-    private LocalDate day;
+    @Convert(converter = LocalDateToDateConverter.class)
+    private LocalDate appointmentDay;
 
     @Column(nullable = false)
+    @Convert(converter = LocalTimeToTimeConverter.class)
     private LocalTime startTime;
 
     @Column(nullable = false)
+    @Convert(converter = LocalTimeToTimeConverter.class)
     private LocalTime endTime;
 
-    @Column(nullable = false)
-    private Integer slotNo;
-
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Doctor doctor;
 
+    @JsonIgnore
     @ManyToOne
     private Patient patient;
 

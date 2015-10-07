@@ -1,5 +1,7 @@
 package io.example.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 import org.springframework.data.domain.Persistable;
 
@@ -23,6 +25,7 @@ public abstract class AbstractPersistable<PK extends Serializable> implements Pe
     private PK id;
 
     @Transient
+    @JsonIgnore
     public boolean isNew() {
         return null == getId();
     }

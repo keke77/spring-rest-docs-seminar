@@ -2,11 +2,9 @@ package io.example;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -28,6 +26,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SampleBootRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @WebAppConfiguration
 public class TestBootConfig {
 
@@ -51,7 +50,6 @@ public class TestBootConfig {
                         .uris()
                             .withScheme("http")
                             .withHost("root-endpoint")
-                            .withPort(8090)
                         .and()
                         .snippets()
                             .withEncoding("UTF-8"))

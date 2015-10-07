@@ -56,6 +56,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-hateoas'
 
     compile 'org.modelmapper:modelmapper'
+    compile 'com.google.guava:guava'
     compile 'commons-beanutils:commons-beanutils'
     compile 'org.apache.commons:commons-lang3'
     compile 'org.projectlombok:lombok'
