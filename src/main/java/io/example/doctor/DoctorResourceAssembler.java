@@ -18,6 +18,9 @@ public class DoctorResourceAssembler extends ResourceAssemblerSupport<Doctor, Do
 
     @Override
     public DoctorResource toResource(Doctor doctor) {
+        if(doctor.getId()==null) {
+            return new DoctorResource(new Doctor());
+        }
         DoctorResource resource = createResourceWithId(doctor.getId(), doctor);
         resource.add(linkTo(DoctorRestController.class).slash(doctor.getId()).slash("schedules").withRel("doctor_schedules"));
         return resource;

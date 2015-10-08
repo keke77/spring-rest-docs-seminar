@@ -2,12 +2,8 @@ package io.example.schedule;
 
 import io.example.config.mapper.AutoMapper;
 import io.example.doctor.Doctor;
-import io.example.doctor.DoctorJpaRepository;
-import io.example.doctor.DoctorResourceAssembler;
 import io.example.doctor.DoctorRestController;
 import io.example.patient.Patient;
-import io.example.patient.PatientJpaRepository;
-import io.example.patient.PatientResourceAssembler;
 import io.example.patient.PatientRestController;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,12 +84,14 @@ public class ScheduleRestController {
 
     @RequestMapping(value = "/{id}/doctor", method = RequestMethod.GET)
     public Resource<Doctor> showDoctor(@PathVariable("id") Long id) {
-        return this.doctorRestController.showOne(id);
+        Resource<Doctor> doctorResource = this.doctorRestController.showOne(id);
+        return doctorResource;
     }
 
     @RequestMapping(value = "/{id}/patient", method = RequestMethod.GET)
     public Resource<Patient> showPatient(@PathVariable("id") Long id) {
-        return this.patientRestController.showOne(id);
+        Resource<Patient> patientResource = this.patientRestController.showOne(id);
+        return patientResource;
     }
 
 }
