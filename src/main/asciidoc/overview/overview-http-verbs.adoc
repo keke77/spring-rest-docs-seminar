@@ -23,6 +23,12 @@ API 정보 조회는 다음과 같은 자원을 통해서 요청 할 수 있습�
 
 | `DELETE`
 | 기존 자원을 삭제 하고자 할 때 사용 됩니다.
+
+| `OPTIONS`
+| Returns the HTTP methods that the server supports
+
+| `CONNECT`
+| Converts the request connection to a transparent TCP/IP tunnel
 |===
 
 

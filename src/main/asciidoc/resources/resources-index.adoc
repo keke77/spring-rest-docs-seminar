@@ -4,7 +4,7 @@
 API의 정보 리스트의 인덱스 진입 점을 제공 합니다.
 
 [[resources-index-access]]
-==== /
+==== / [small silver]*[GET]*
 
 `GET` 요청은 인덱스를 엑세스 하는데 사용 됩니다.
 

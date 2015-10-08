@@ -1,0 +1,95 @@
+[[resources-patient]]
+=== Patients
+
+환자 목록과 상세 정보, 생성, 수정, 삭제를 요청 하는데 사용 합니다.
+
+[[resources-patient-show-all]]
+==== /patients [small silver]*[GET]*
+
+`GET` 요청은 환자 리스트를 검색 합니다.
+
+===== Response Structure
+
+include::{snippets}/patient-show-all/response-fields.adoc[]
+
+===== Example Request
+
+include::{snippets}/patient-show-all/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/patient-show-all/http-response.adoc[]
+
+[[resources-index-links]]
+===== Links
+
+include::{snippets}/patient-show-all/links.adoc[]
+
+
+[[resources-patient-show-one]]
+==== /patients/{id} [small silver]*[GET]*
+
+`GET` 요청은 환자 정보를 검색 합니다.
+
+===== Response Structure
+
+include::{snippets}/patient-show-one/response-fields.adoc[]
+
+===== Example Request
+
+include::{snippets}/patient-show-one/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/patient-show-one/http-response.adoc[]
+
+[[resources-index-links]]
+===== Links
+
+include::{snippets}/patient-show-one/links.adoc[]
+
+
+[[resources-patient-create]]
+==== /patients/{id} [small silver]*[PUT]*
+
+`PUT` 요청은 환자 정보를 생성 합니다.
+
+===== Response Headers Structure
+
+include::{snippets}/patient-create/response-headers.adoc[]
+
+===== Example Request
+
+include::{snippets}/patient-create/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/patient-create/http-response.adoc[]
+
+
+[[resources-patient-update]]
+==== /patients/{id} [small silver]*[PATCH]*
+
+`PATCH` 요청은 환자 정보를 수정 합니다.
+
+===== Example Request
+
+include::{snippets}/patient-update/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/patient-update/http-response.adoc[]
+
+
+[[resources-patient-delete]]
+==== /patients/{id} [small silver]*[DELETE]*
+
+`DELETE` 요청은 환자 정보를 삭제 합니다.
+
+===== Example Request
+
+include::{snippets}/patient-delete/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/patient-create/http-response.adoc[]

@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.ResultHandler;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -77,6 +79,8 @@ public class TestScheduleRestController extends TestBootConfig  {
                         .contentType(MediaTypes.HAL_JSON)
                         .content(this.objectMapper.writeValueAsString(create)))
                 .andExpect(header().string("Location", notNullValue()))
+                .andDo(this.document.snippets(responseHeaders(
+                        headerWithName("Location").description("신규 생성된 자원 주소"))))
                 .andReturn().getResponse().getHeader("Location");
     }
 

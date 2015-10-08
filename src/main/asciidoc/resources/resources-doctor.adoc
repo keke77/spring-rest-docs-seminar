@@ -1,0 +1,95 @@
+[[resources-doctor]]
+=== Doctors
+
+의사 목록과 상세 정보, 생성, 수정, 삭제를 요청 하는데 사용 합니다.
+
+[[resources-doctor-show-all]]
+==== /doctors [small silver]*[GET]*
+
+`GET` 요청은 의사 리스트를 검색 합니다.
+
+===== Response Structure
+
+include::{snippets}/doctor-show-all/response-fields.adoc[]
+
+===== Example Request
+
+include::{snippets}/doctor-show-all/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/doctor-show-all/http-response.adoc[]
+
+[[resources-index-links]]
+===== Links
+
+include::{snippets}/doctor-show-all/links.adoc[]
+
+
+[[resources-doctor-show-one]]
+==== /doctors/{id} [small silver]*[GET]*
+
+`GET` 요청은 의사 정보를 검색 합니다.
+
+===== Response Structure
+
+include::{snippets}/doctor-show-one/response-fields.adoc[]
+
+===== Example Request
+
+include::{snippets}/doctor-show-one/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/doctor-show-one/http-response.adoc[]
+
+[[resources-index-links]]
+===== Links
+
+include::{snippets}/doctor-show-one/links.adoc[]
+
+
+[[resources-doctor-create]]
+==== /doctors/{id} [small silver]*[PUT]*
+
+`PUT` 요청은 의사 정보를 생성 합니다.
+
+===== Response Headers Structure
+
+include::{snippets}/doctor-create/response-headers.adoc[]
+
+===== Example Request
+
+include::{snippets}/doctor-create/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/doctor-create/http-response.adoc[]
+
+
+[[resources-doctor-update]]
+==== /doctors/{id} [small silver]*[PATCH]*
+
+`PATCH` 요청은 의사 정보를 수정 합니다.
+
+===== Example Request
+
+include::{snippets}/doctor-update/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/doctor-update/http-response.adoc[]
+
+
+[[resources-doctor-delete]]
+==== /doctors/{id} [small silver]*[DELETE]*
+
+`DELETE` 요청은 의사 정보를 삭제 합니다.
+
+===== Example Request
+
+include::{snippets}/doctor-delete/http-request.adoc[]
+
+===== Example Response
+
+include::{snippets}/doctor-create/http-response.adoc[]
