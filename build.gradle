@@ -46,7 +46,7 @@ dependencyManagement {
     }
     testCompile {
         dependencies {
-            dependency 'org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RC1'
+            dependency 'org.springframework.restdocs:spring-restdocs-mockmvc:1.0.0.RELEASE'
         }
     }
 }
@@ -60,6 +60,7 @@ dependencies {
     compile 'commons-beanutils:commons-beanutils'
     compile 'org.apache.commons:commons-lang3'
     compile 'org.projectlombok:lombok'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
     runtime 'org.hsqldb:hsqldb'
     runtime 'mysql:mysql-connector-java'

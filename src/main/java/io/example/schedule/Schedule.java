@@ -46,11 +46,9 @@ public class Schedule extends AbstractPersistable<Long> implements Serializable 
     @Convert(converter = LocalTimeToTimeConverter.class)
     private LocalTime endTime;
 
-    @JsonIgnore
     @ManyToOne(optional = false)
     private Doctor doctor;
 
-    @JsonIgnore
     @ManyToOne
     private Patient patient;
 

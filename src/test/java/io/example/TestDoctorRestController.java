@@ -4,9 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import io.example.doctor.Doctor;
 import io.example.doctor.DoctorJpaRepository;
-
-import java.util.Map;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
@@ -14,21 +11,15 @@ import org.springframework.restdocs.hypermedia.LinkDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultHandler;
 
-import static org.hamcrest.Matchers.is;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -53,13 +44,14 @@ public class TestDoctorRestController extends TestBootConfig {
                                 linkWithRel("self").description("---")),
                         responseFields(
                                 fieldWithPath("_links").type(JsonFieldType.OBJECT).description("<<resources-doctors-show-all-links,Doctors>> Resources"),
-                                fieldWithPath("_embedded.doctors").type(JsonFieldType.OBJECT).description("<<resource-guilds-show-one, Doctor>> Resources"),
+                                fieldWithPath("_embedded.doctors").type(JsonFieldType.OBJECT).description("<<resource-doctors-show-one, Doctor>> Resources"),
                                 fieldWithPath("page").type(JsonFieldType.OBJECT).description("Information On <<overview-pagination, Pagination>>"))));
     }
 
     @Test
     public void doctorShowOne() throws Exception {
-        this.mockMvc.perform(get("/doctors/1"))
+        Doctor doctor = this.doctorJpaRepository.findAll().get(0);
+        this.mockMvc.perform(get("/doctors/"+doctor.getId()))
                 .andExpect(status().isOk())
                 .andDo(createDoctorResultHandler(
                         linkWithRel("self").description("---"),

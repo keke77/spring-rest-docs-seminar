@@ -12,7 +12,6 @@ spring:
   mustach:
     check-template-location: false
   jackson:
-    date-format: yyyy-MM-DD HH:mm:ss
     serialization-inclusion: NON_NULL
     serialization:
       indent_output: true

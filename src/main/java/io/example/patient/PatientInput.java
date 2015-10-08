@@ -1,7 +1,11 @@
 package io.example.patient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,6 +15,7 @@ import java.time.LocalDate;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class PatientInput implements Serializable {
 
@@ -23,6 +28,7 @@ public class PatientInput implements Serializable {
     private String name;
 
     @NonNull
-    private LocalDate birthDay;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate birthDate;
 
 }

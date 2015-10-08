@@ -1,5 +1,7 @@
 package io.example.schedule;
 
+import io.example.doctor.DoctorRestController;
+import io.example.patient.PatientRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,8 @@ public class ScheduleResourceAssembler extends ResourceAssemblerSupport<Schedule
     @Override
     public ScheduleResource toResource(Schedule schedule) {
         ScheduleResource resource = createResourceWithId(schedule.getId(), schedule);
-        resource.add(linkTo(ScheduleRestController.class).slash(schedule.getId()).slash("seminar").withRel("seminar"));
+        resource.add(linkTo(DoctorRestController.class).slash(schedule.getId()).slash("doctor").withRel("doctor"));
+        resource.add(linkTo(PatientRestController.class).slash(schedule.getId()).slash("patient").withRel("patient"));
         return resource;
     }
 

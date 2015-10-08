@@ -2,7 +2,6 @@ package io.example.patient;
 
 import io.example.common.NestedContentResource;
 import io.example.config.mapper.AutoMapper;
-import io.example.schedule.Schedule;
 import io.example.schedule.ScheduleResourceAssembler;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;

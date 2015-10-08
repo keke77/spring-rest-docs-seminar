@@ -2,6 +2,7 @@ package io.example.schedule;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalTime;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class ScheduleInput implements Serializable {
 
@@ -21,16 +23,16 @@ public class ScheduleInput implements Serializable {
     private Long id;
 
     @NonNull
-    private LocalDate day;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate appointmentDay;
 
     @NonNull
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
     @NonNull
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime endTime;
-
-    @NonNull
-    private Integer slotNo;
 
     @NonNull
     private Long doctorId;
