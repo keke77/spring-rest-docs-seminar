@@ -20,14 +20,18 @@ import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.li
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by gmind on 2015-10-06.
  */
-public class TestPatientRestController extends TestBootConfig {
+public class TestPatientsRestController extends TestBootConfig {
 
     @Autowired
     private PatientJpaRepository patientJpaRepository;
@@ -36,32 +40,35 @@ public class TestPatientRestController extends TestBootConfig {
     private ObjectMapper objectMapper;
 
     @Test
-    public void patientShowAll() throws Exception {
-        this.mockMvc.perform(get("/patients?page=2&size=10"))
+    public void patientsShowAll() throws Exception {
+        this.mockMvc.perform(get("/patients").param("page","2").param("size", "10"))
                 .andExpect(status().isOk())
                 .andDo(this.document.snippets(
                         links(
-                                linkWithRel("next").optional().description("--"),
-                                linkWithRel("prev").optional().description("--"),
-                                linkWithRel("self").description("---")),
+                                linkWithRel("next").optional().description("다음페이지"),
+                                linkWithRel("prev").optional().description("이전페이지"),
+                                linkWithRel("self").description("현재페이지")),
+                        requestParameters(
+                                parameterWithName("page").description("페이지 번호"),
+                                parameterWithName("size").description("리스트 사이즈")),
                         responseFields(
-                                fieldWithPath("_links").type(JsonFieldType.OBJECT).description("<<resources-patients-show-all-links,Doctors>> Resources"),
-                                fieldWithPath("_embedded.patients").type(JsonFieldType.OBJECT).description("<<resource-patients-show-one, Doctor>> Resources"),
+                                fieldWithPath("_links").type(JsonFieldType.OBJECT).description("<<resources-patients-show-all-links,Patients>> Resources"),
+                                fieldWithPath("_embedded.patients").type(JsonFieldType.OBJECT).description("<<resource-patients-show-one, Patients>> Resources").optional(),
                                 fieldWithPath("page").type(JsonFieldType.OBJECT).description("Information On <<overview-pagination, Pagination>>"))));
     }
 
     @Test
-    public void patientShowOne() throws Exception {
+    public void patientsShowOne() throws Exception {
         Patient patient = this.patientJpaRepository.findAll().get(0);
-        this.mockMvc.perform(get("/patients/"+patient.getId()))
+        this.mockMvc.perform(get("/patients/{id}", patient.getId()))
                 .andExpect(status().isOk())
-                .andDo(createPatientResultHandler(
-                        linkWithRel("self").description("---"),
-                        linkWithRel("patient_schedules").description("---")));
+                .andDo(createPatientsResultHandler(
+                        linkWithRel("self").description("현재정보링크"),
+                        linkWithRel("patient_schedules").description("환자진료스케쥴")));
     }
 
     @Test
-    public void patientCreate() throws Exception {
+    public void patientsCreate() throws Exception {
         Map<String, String> create = Maps.newHashMap();
         create.put("name", "patient_name_create");
         create.put("birthDate", "2015-10-01");
@@ -70,36 +77,48 @@ public class TestPatientRestController extends TestBootConfig {
                         .contentType(MediaTypes.HAL_JSON)
                         .content(this.objectMapper.writeValueAsString(create)))
                 .andExpect(header().string("Location", notNullValue()))
-                .andDo(this.document.snippets(responseHeaders(
-                        headerWithName("Location").description("신규 생성된 자원 주소"))))
+                .andDo(this.document.snippets(
+                        requestFields(
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("환자명"),
+                                fieldWithPath("birthDate").type(JsonFieldType.STRING).description("생년월일(yyyy-MM-dd)")),
+                        responseHeaders(
+                            headerWithName("Location").description("신규 생성된 자원 주소"))))
                 .andReturn().getResponse().getHeader("Location");
     }
 
     @Test
-    public void patientUpdate() throws Exception {
+    public void patientsUpdate() throws Exception {
         Patient patient = this.patientJpaRepository.findAll().get(0);
         Map<String, String> update = Maps.newHashMap();
         update.put("name", patient.getName()+"_update");
         update.put("birthDate", "2015-10-02");
         this.mockMvc.perform(
-                patch("/patients/"+patient.getId())
+                patch("/patients/{id}",patient.getId())
                         .contentType(MediaTypes.HAL_JSON)
                         .content(this.objectMapper.writeValueAsString(update)))
+                .andDo(this.document.snippets(
+                        requestFields(
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("환자명"),
+                                fieldWithPath("birthDate").type(JsonFieldType.STRING).description("생년월일(yyyy-MM-dd)")),
+                        pathParameters(parameterWithName("id").description("환자아이디"))))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    public void patientDelete() throws Exception {
+    public void patientsDelete() throws Exception {
         Patient patient = this.patientJpaRepository.findAll().get(0);
         this.mockMvc.perform(
-                delete("/patients/" + patient.getId())
+                delete("/patients/{id}", patient.getId())
                         .contentType(MediaTypes.HAL_JSON))
+                .andDo(this.document.snippets(pathParameters(parameterWithName("id").description("환자아이디"))))
                 .andExpect(status().isOk());
     }
 
-    public ResultHandler createPatientResultHandler(LinkDescriptor... linkDescriptors) {
+    public ResultHandler createPatientsResultHandler(LinkDescriptor... linkDescriptors) {
         return this.document.snippets(
                 links(linkDescriptors),
+                pathParameters(
+                        parameterWithName("id").description("환자아이디")),
                 responseFields(
                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("환자아이디"),
                         fieldWithPath("name").type(JsonFieldType.STRING).description("환자명"),

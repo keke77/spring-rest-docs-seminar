@@ -33,6 +33,6 @@ include::overview/overview-timezones.adoc[]
 == Resources
 
 include::resources/resources-index.adoc[]
-include::resources/resources-doctor.adoc[]
-include::resources/resources-patient.adoc[]
-include::resources/resources-schedule.adoc[]
+include::resources/resources-doctors.adoc[]
+include::resources/resources-patients.adoc[]
+include::resources/resources-schedules.adoc[]
