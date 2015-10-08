@@ -1,6 +1,14 @@
 package io.example.schedule;
 
 import io.example.config.mapper.AutoMapper;
+import io.example.doctor.Doctor;
+import io.example.doctor.DoctorJpaRepository;
+import io.example.doctor.DoctorResourceAssembler;
+import io.example.doctor.DoctorRestController;
+import io.example.patient.Patient;
+import io.example.patient.PatientJpaRepository;
+import io.example.patient.PatientResourceAssembler;
+import io.example.patient.PatientRestController;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,13 +32,31 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class ScheduleRestController {
 
     @Autowired
+    private DoctorJpaRepository doctorJpaRepository;
+
+    @Autowired
+    private PatientJpaRepository patientJpaRepository;
+
+    @Autowired
     private ScheduleJpaRepository scheduleJpaRepository;
 
     @Autowired
     private ScheduleResourceAssembler scheduleResourceAssembler;
 
     @Autowired
+    private DoctorResourceAssembler doctorResourceAssembler;
+
+    @Autowired
+    private PatientResourceAssembler patientResourceAssembler;
+
+    @Autowired
     private PagedResourcesAssembler pagedResourcesAssembler;
+
+    @Autowired
+    private DoctorRestController doctorRestController;
+
+    @Autowired
+    private PatientRestController patientRestController;
 
     @Autowired
     private AutoMapper autoMapper;
@@ -70,6 +96,16 @@ public class ScheduleRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void  delete(@PathVariable("id") Long id) {
         this.scheduleJpaRepository.delete(id);
+    }
+
+    @RequestMapping(value = "/{id}/doctor", method = RequestMethod.GET)
+    public Resource<Doctor> showDoctor(@PathVariable("id") Long id) {
+        return this.doctorRestController.showOne(id);
+    }
+
+    @RequestMapping(value = "/{id}/patient", method = RequestMethod.GET)
+    public Resource<Patient> showPatient(@PathVariable("id") Long id) {
+        return this.patientRestController.showOne(id);
     }
 
 }

@@ -69,8 +69,8 @@ public class TestSchedulesRestController extends TestBootConfig  {
                 .andExpect(status().isOk())
                 .andDo(createSchedulesResultHandler(
                         linkWithRel("self").description("현재정보링크"),
-                        linkWithRel("doctor").description("의사정보").optional(),
-                        linkWithRel("patient").description("환자정보").optional()));
+                        linkWithRel("doctor").description("의사정보"),
+                        linkWithRel("patient").description("환자정보")));
     }
 
     @Test
@@ -135,8 +135,6 @@ public class TestSchedulesRestController extends TestBootConfig  {
                         fieldWithPath("appointmentDay").type(JsonFieldType.STRING).description("진료일"),
                         fieldWithPath("startTime").type(JsonFieldType.STRING).description("진료시작시간"),
                         fieldWithPath("endTime").type(JsonFieldType.STRING).description("진료종료시간"),
-                        fieldWithPath("doctor").type(JsonFieldType.OBJECT).description("의사정보"),
-                        fieldWithPath("patient").type(JsonFieldType.OBJECT).description("환자정보"),
                         fieldWithPath("_links").type(JsonFieldType.OBJECT).description("스케쥴정보")));
     }
 
