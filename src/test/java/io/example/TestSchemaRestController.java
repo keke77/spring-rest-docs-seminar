@@ -9,10 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by gmind on 2015-10-08.
  */
-public class TestHeaderRestController extends TestBootConfig {
+public class TestSchemaRestController extends TestBootConfig {
 
     @Test
-    public void headers() throws Exception {
+    public void schema() throws Exception {
         this.document.snippets(responseHeaders(
                 headerWithName("Content-Type").description("The Content-Type of the payload, e.g. `application/hal+json`")));
         this.mockMvc.perform(get("/"))
