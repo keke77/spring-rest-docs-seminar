@@ -32,22 +32,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class ScheduleRestController {
 
     @Autowired
-    private DoctorJpaRepository doctorJpaRepository;
-
-    @Autowired
-    private PatientJpaRepository patientJpaRepository;
-
-    @Autowired
     private ScheduleJpaRepository scheduleJpaRepository;
 
     @Autowired
     private ScheduleResourceAssembler scheduleResourceAssembler;
-
-    @Autowired
-    private DoctorResourceAssembler doctorResourceAssembler;
-
-    @Autowired
-    private PatientResourceAssembler patientResourceAssembler;
 
     @Autowired
     private PagedResourcesAssembler pagedResourcesAssembler;
