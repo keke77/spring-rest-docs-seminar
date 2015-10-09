@@ -1,5 +1,6 @@
 package io.example.patient;
 
+import io.example.common.ResourceNotFoundException;
 import io.example.doctor.Doctor;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -21,7 +22,7 @@ public class PatientResourceAssembler extends ResourceAssemblerSupport<Patient, 
     @Override
     public PatientResource toResource(Patient patient) {
         if(patient.getId()==null) {
-            return new PatientResource(new Patient());
+            throw new ResourceNotFoundException("patient");
         }
         PatientResource resource = createResourceWithId(patient.getId(), patient);
         resource.add(linkTo(PatientRestController.class).slash(patient.getId()).slash("schedules").withRel("patient_schedules"));

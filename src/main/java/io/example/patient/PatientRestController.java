@@ -53,7 +53,7 @@ public class PatientRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Resource<Patient> showOne(@PathVariable("id") Long id) {
         Patient entity = this.patientJpaRepository.findOne(id);
-        return this.patientResourceAssembler.toResource(ObjectUtils.defaultIfNull(entity, new Patient()));
+        return this.patientResourceAssembler.toResource(entity);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

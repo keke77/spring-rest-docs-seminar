@@ -1,5 +1,6 @@
 package io.example.schedule;
 
+import io.example.common.ResourceNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class ScheduleResourceAssembler extends ResourceAssemblerSupport<Schedule
     @Override
     public ScheduleResource toResource(Schedule schedule) {
         if(schedule.getId()==null) {
-            return new ScheduleResource(new Schedule());
+            throw new ResourceNotFoundException("schedule");
         }
         ScheduleResource resource = createResourceWithId(schedule.getId(), schedule);
         resource.add(linkTo(ScheduleRestController.class).slash(schedule.getId()).slash("doctor").withRel("doctor"));

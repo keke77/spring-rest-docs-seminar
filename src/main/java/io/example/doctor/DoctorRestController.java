@@ -1,7 +1,9 @@
 package io.example.doctor;
 
 import io.example.common.NestedContentResource;
+import io.example.common.ResourceNotFoundException;
 import io.example.config.mapper.AutoMapper;
+import io.example.schedule.Schedule;
 import io.example.schedule.ScheduleResourceAssembler;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class DoctorRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Resource<Doctor> showOne(@PathVariable("id") Long id) {
         Doctor entity = this.doctorJpaRepository.findOne(id);
-        return this.doctorResourceAssembler.toResource(ObjectUtils.defaultIfNull(entity, new Doctor()));
+        return this.doctorResourceAssembler.toResource(entity);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

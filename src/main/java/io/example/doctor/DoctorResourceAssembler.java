@@ -1,5 +1,6 @@
 package io.example.doctor;
 
+import io.example.common.ResourceNotFoundException;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class DoctorResourceAssembler extends ResourceAssemblerSupport<Doctor, Do
     @Override
     public DoctorResource toResource(Doctor doctor) {
         if(doctor.getId()==null) {
-            return new DoctorResource(new Doctor());
+            throw new ResourceNotFoundException("doctor");
         }
         DoctorResource resource = createResourceWithId(doctor.getId(), doctor);
         resource.add(linkTo(DoctorRestController.class).slash(doctor.getId()).slash("schedules").withRel("doctor_schedules"));
