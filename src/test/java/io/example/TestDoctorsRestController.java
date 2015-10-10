@@ -112,7 +112,6 @@ public class TestDoctorsRestController extends TestBootConfig {
     public void doctorsSchdules() throws Exception {
         Doctor doctor = this.doctorJpaRepository.findAll().get(0);
         this.mockMvc.perform(get("/doctors/{id}/schedules", doctor.getId()))
-                .andExpect(jsonPath("_embedded.schedules", is(notNullValue())))
                 .andExpect(status().isOk());
     }
 

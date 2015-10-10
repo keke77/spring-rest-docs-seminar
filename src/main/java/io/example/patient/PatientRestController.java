@@ -1,9 +1,9 @@
 package io.example.patient;
 
-import io.example.common.NestedContentResource;
 import io.example.config.mapper.AutoMapper;
+import io.example.schedule.Schedule;
+import io.example.schedule.ScheduleJpaRepository;
 import io.example.schedule.ScheduleResourceAssembler;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,12 +11,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static io.example.patient.PatientResourceAssembler.PatientResource;
 import static io.example.schedule.ScheduleResourceAssembler.ScheduleResource;
@@ -31,6 +28,9 @@ public class PatientRestController {
 
     @Autowired
     private PatientJpaRepository patientJpaRepository;
+
+    @Autowired
+    private ScheduleJpaRepository scheduleJpaRepository;
 
     @Autowired
     private PatientResourceAssembler patientResourceAssembler;
@@ -82,10 +82,9 @@ public class PatientRestController {
     }
 
     @RequestMapping(value = "/{id}/schedules", method = RequestMethod.GET)
-    public ResourceSupport showSchdules(@PathVariable("id") Long id) {
-        Patient patient = this.patientJpaRepository.findOne(id);
-        List<ScheduleResource> resources = this.scheduleResourceAssembler.toResources(patient.getSchedules());
-        return new NestedContentResource<ScheduleResource>(resources);
+    public PagedResources<ScheduleResource> showSchdules(@PathVariable("id") Long id, @PageableDefault Pageable pageable) {
+        Page<Schedule> schedules = this.scheduleJpaRepository.findByDoctorId(id, pageable);
+        return this.pagedResourcesAssembler.toResource(schedules);
     }
 
 }

@@ -121,8 +121,7 @@ public class TestPatientsRestController extends TestBootConfig {
     public void patientsSchdules() throws Exception {
         Patient patient = this.patientJpaRepository.findAll().get(0);
         this.mockMvc.perform(get("/patients/{id}/schedules", patient.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("_embedded.schedules", is(notNullValue())));
+                .andExpect(status().isOk());
     }
 
     public ResultHandler createPatientsResultHandler(LinkDescriptor... linkDescriptors) {

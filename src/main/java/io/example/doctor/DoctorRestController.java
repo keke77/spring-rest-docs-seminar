@@ -1,11 +1,9 @@
 package io.example.doctor;
 
-import io.example.common.NestedContentResource;
-import io.example.common.ResourceNotFoundException;
 import io.example.config.mapper.AutoMapper;
 import io.example.schedule.Schedule;
+import io.example.schedule.ScheduleJpaRepository;
 import io.example.schedule.ScheduleResourceAssembler;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +11,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static io.example.doctor.DoctorResourceAssembler.DoctorResource;
 import static io.example.schedule.ScheduleResourceAssembler.ScheduleResource;
@@ -33,6 +28,9 @@ public class DoctorRestController {
 
     @Autowired
     private DoctorJpaRepository doctorJpaRepository;
+
+    @Autowired
+    private ScheduleJpaRepository scheduleJpaRepository;
 
     @Autowired
     private DoctorResourceAssembler doctorResourceAssembler;
@@ -84,10 +82,9 @@ public class DoctorRestController {
     }
 
     @RequestMapping(value = "/{id}/schedules", method = RequestMethod.GET)
-    public ResourceSupport showSchdules(@PathVariable("id") Long id) {
-        Doctor doctor = this.doctorJpaRepository.findOne(id);
-        List<ScheduleResource> resources = this.scheduleResourceAssembler.toResources(doctor.getSchedules());
-        return new NestedContentResource<ScheduleResource>(resources);
+    public PagedResources<ScheduleResource> showSchdules(@PathVariable("id") Long id, @PageableDefault Pageable pageable) {
+        Page<Schedule> schedules = this.scheduleJpaRepository.findByDoctorId(id, pageable);
+        return this.pagedResourcesAssembler.toResource(schedules);
     }
 
 }

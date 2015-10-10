@@ -702,7 +702,7 @@ Content-Type: application/hal+json
 Content-Length: 196
 
 {
-  "timestamp" : "2015-10-283 14:04:09",
+  "timestamp" : "2015-10-283 14:15:13",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "The tag 'http://localhost:8080/doctors/123' does not exist",
@@ -2363,6 +2363,22 @@ Content-Length: 4497
   },
   "_embedded" : {
     "schedules" : [ {
+      "id" : 315,
+      "appointmentDay" : "2015-10-11",
+      "startTime" : "12:00",
+      "endTime" : "12:30",
+      "_links" : {
+        "self" : {
+          "href" : "http://root-endpoint:8080/schedules/315"
+        },
+        "doctor" : {
+          "href" : "http://root-endpoint:8080/schedules/315/doctor"
+        },
+        "patient" : {
+          "href" : "http://root-endpoint:8080/schedules/315/patient"
+        }
+      }
+    }, {
       "id" : 316,
       "appointmentDay" : "2015-10-11",
       "startTime" : "12:30",
@@ -2488,27 +2504,11 @@ Content-Length: 4497
           "href" : "http://root-endpoint:8080/schedules/324/doctor"
         }
       }
-    }, {
-      "id" : 326,
-      "appointmentDay" : "2015-10-12",
-      "startTime" : "10:30",
-      "endTime" : "11:00",
-      "_links" : {
-        "self" : {
-          "href" : "http://root-endpoint:8080/schedules/326"
-        },
-        "doctor" : {
-          "href" : "http://root-endpoint:8080/schedules/326/doctor"
-        },
-        "patient" : {
-          "href" : "http://root-endpoint:8080/schedules/326/patient"
-        }
-      }
     } ]
   },
   "page" : {
     "size" : 10,
-    "totalElements" : 8104,
+    "totalElements" : 8106,
     "totalPages" : 811,
     "number" : 2
   }
