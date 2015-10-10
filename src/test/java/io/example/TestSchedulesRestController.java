@@ -70,7 +70,7 @@ public class TestSchedulesRestController extends TestBootConfig  {
                 .andDo(createSchedulesResultHandler(
                         linkWithRel("self").description("현재정보링크"),
                         linkWithRel("doctor").description("의사정보"),
-                        linkWithRel("patient").description("환자정보")));
+                        linkWithRel("patient").optional().description("환자정보")));
     }
 
     @Test
