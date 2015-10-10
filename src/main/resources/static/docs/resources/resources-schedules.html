@@ -465,7 +465,7 @@ Host: root-endpoint</code></pre>
 <h5 id="response-structure">Response Structure</h5>
 <div class="sect5">
 <h6 id="response-fields">response-fields</h6>
-<table class="tableblock frame-all grid-all spread">
+<table id="resources-schedules-show-all-response-fields" class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 33%;">
@@ -487,7 +487,7 @@ Host: root-endpoint</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">_embedded.schedules</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resource-schedules-show-one">Schedule</a> Resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-schedules-show-one">Schedule</a> Resource</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
@@ -523,22 +523,6 @@ Content-Length: 4497
   },
   "_embedded" : {
     "schedules" : [ {
-      "id" : 315,
-      "appointmentDay" : "2015-10-11",
-      "startTime" : "12:00",
-      "endTime" : "12:30",
-      "_links" : {
-        "self" : {
-          "href" : "http://root-endpoint:8080/schedules/315"
-        },
-        "doctor" : {
-          "href" : "http://root-endpoint:8080/schedules/315/doctor"
-        },
-        "patient" : {
-          "href" : "http://root-endpoint:8080/schedules/315/patient"
-        }
-      }
-    }, {
       "id" : 316,
       "appointmentDay" : "2015-10-11",
       "startTime" : "12:30",
@@ -664,12 +648,28 @@ Content-Length: 4497
           "href" : "http://root-endpoint:8080/schedules/324/doctor"
         }
       }
+    }, {
+      "id" : 326,
+      "appointmentDay" : "2015-10-12",
+      "startTime" : "10:30",
+      "endTime" : "11:00",
+      "_links" : {
+        "self" : {
+          "href" : "http://root-endpoint:8080/schedules/326"
+        },
+        "doctor" : {
+          "href" : "http://root-endpoint:8080/schedules/326/doctor"
+        },
+        "patient" : {
+          "href" : "http://root-endpoint:8080/schedules/326/patient"
+        }
+      }
     } ]
   },
   "page" : {
     "size" : 10,
-    "totalElements" : 8111,
-    "totalPages" : 812,
+    "totalElements" : 8104,
+    "totalPages" : 811,
     "number" : 2
   }
 }</code></pre>
@@ -830,15 +830,15 @@ Content-Length: 298
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">self</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">doctor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">의사정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-doctors-show-one-response-fields">Doctor</a> Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">patient</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">환자정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-patients-show-one-response-fields">Patient</a> Rel Href</p></td>
 </tr>
 </tbody>
 </table>
@@ -1095,7 +1095,7 @@ Host: root-endpoint</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-09 12:23:18 +09:00
+Last updated 2015-10-10 12:49:53 +09:00
 </div>
 </div>
 </body>

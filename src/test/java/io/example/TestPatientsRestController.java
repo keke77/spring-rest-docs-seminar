@@ -2,6 +2,7 @@ package io.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
+import io.example.doctor.Doctor;
 import io.example.patient.Patient;
 import io.example.patient.PatientJpaRepository;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.ResultHandler;
 
 import java.util.Map;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -26,6 +28,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -53,7 +56,7 @@ public class TestPatientsRestController extends TestBootConfig {
                                 parameterWithName("size").description("리스트 사이즈")),
                         responseFields(
                                 fieldWithPath("_links").type(JsonFieldType.OBJECT).description("<<resources-patients-show-all-links,Patients>> Resources"),
-                                fieldWithPath("_embedded.patients").type(JsonFieldType.OBJECT).description("<<resource-patients-show-one, Patients>> Resources").optional(),
+                                fieldWithPath("_embedded.patients").type(JsonFieldType.OBJECT).description("<<resources-patients-show-one, Patient>> Resource").optional(),
                                 fieldWithPath("page").type(JsonFieldType.OBJECT).description("Information On <<overview-pagination, Pagination>>"))));
     }
 
@@ -63,8 +66,8 @@ public class TestPatientsRestController extends TestBootConfig {
         this.mockMvc.perform(get("/patients/{id}", patient.getId()))
                 .andExpect(status().isOk())
                 .andDo(createPatientsResultHandler(
-                        linkWithRel("self").description("현재정보링크"),
-                        linkWithRel("patient_schedules").optional().description("환자진료스케쥴")));
+                        linkWithRel("self").description("Self Rel Href"),
+                        linkWithRel("patient_schedules").optional().description("<<resources-schedules-show-all-response-fields, Patient Schedules>> Rel Href")));
     }
 
     @Test
@@ -93,7 +96,7 @@ public class TestPatientsRestController extends TestBootConfig {
         update.put("name", patient.getName()+"_update");
         update.put("birthDate", "2015-10-02");
         this.mockMvc.perform(
-                patch("/patients/{id}",patient.getId())
+                patch("/patients/{id}", patient.getId())
                         .contentType(MediaTypes.HAL_JSON)
                         .content(this.objectMapper.writeValueAsString(update)))
                 .andDo(this.document.snippets(
@@ -112,6 +115,14 @@ public class TestPatientsRestController extends TestBootConfig {
                         .contentType(MediaTypes.HAL_JSON))
                 .andDo(this.document.snippets(pathParameters(parameterWithName("id").description("환자아이디"))))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void patientsSchdules() throws Exception {
+        Patient patient = this.patientJpaRepository.findAll().get(0);
+        this.mockMvc.perform(get("/patients/{id}/schedules", patient.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("_embedded.schedules", is(notNullValue())));
     }
 
     public ResultHandler createPatientsResultHandler(LinkDescriptor... linkDescriptors) {

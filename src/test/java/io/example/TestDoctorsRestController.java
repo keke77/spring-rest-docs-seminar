@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.restdocs.hypermedia.LinkDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.scheduling.annotation.Schedules;
 import org.springframework.test.web.servlet.ResultHandler;
 
 import java.util.Map;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -22,6 +24,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -49,7 +52,7 @@ public class TestDoctorsRestController extends TestBootConfig {
                                 parameterWithName("size").description("리스트 사이즈")),
                         responseFields(
                                 fieldWithPath("_links").type(JsonFieldType.OBJECT).description("<<resources-doctors-show-all-links,Doctors>> Resources"),
-                                fieldWithPath("_embedded.doctors").type(JsonFieldType.OBJECT).description("<<resources-doctors-show-one, Doctor>> Resources").optional(),
+                                fieldWithPath("_embedded.doctors").type(JsonFieldType.OBJECT).description("<<resources-doctors-show-one, Doctor>> Resource").optional(),
                                 fieldWithPath("page").type(JsonFieldType.OBJECT).description("Information On <<overview-pagination, Pagination>>"))));
     }
 
@@ -59,8 +62,8 @@ public class TestDoctorsRestController extends TestBootConfig {
         this.mockMvc.perform(get("/doctors/{id}", doctor.getId()))
                 .andExpect(status().isOk())
                 .andDo(createDoctorsResultHandler(
-                        linkWithRel("self").description("현재정보링크"),
-                        linkWithRel("doctor_schedules").description("의사진료스케쥴")));
+                        linkWithRel("self").description("Self Rel Href"),
+                        linkWithRel("doctor_schedules").description("<<resources-schedules-show-all-response-fields, Doctor Schedules>> Rel Href")));
     }
 
     @Test
@@ -102,6 +105,14 @@ public class TestDoctorsRestController extends TestBootConfig {
                 delete("/doctors/{id}", doctor.getId())
                         .contentType(MediaTypes.HAL_JSON))
                 .andDo(this.document.snippets(pathParameters(parameterWithName("id").description("의사아이디"))))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void doctorsSchdules() throws Exception {
+        Doctor doctor = this.doctorJpaRepository.findAll().get(0);
+        this.mockMvc.perform(get("/doctors/{id}/schedules", doctor.getId()))
+                .andExpect(jsonPath("_embedded.schedules", is(notNullValue())))
                 .andExpect(status().isOk());
     }
 

@@ -487,7 +487,7 @@ Host: root-endpoint</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">_embedded.patients</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resource-patients-show-one">Patients</a> Resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-patients-show-one">Patient</a> Resource</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
@@ -708,7 +708,7 @@ Host: root-endpoint</code></pre>
 <h5 id="response-structure-2">Response Structure</h5>
 <div class="sect5">
 <h6 id="response-fields-2">response-fields</h6>
-<table class="tableblock frame-all grid-all spread">
+<table id="resources-patients-show-one-response-fields" class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 33%;">
@@ -786,11 +786,11 @@ Content-Length: 279
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">self</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">patient_schedules</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">환자진료스케쥴</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-schedules-show-all-response-fields">Patient Schedules</a> Rel Href</p></td>
 </tr>
 </tbody>
 </table>
@@ -1011,7 +1011,7 @@ Host: root-endpoint</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-10-09 12:23:18 +09:00
+Last updated 2015-10-10 12:50:43 +09:00
 </div>
 </div>
 </body>

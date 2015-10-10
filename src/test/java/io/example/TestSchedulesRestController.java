@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.ResultHandler;
 
 import java.util.Map;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
@@ -30,6 +31,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -63,7 +65,7 @@ public class TestSchedulesRestController extends TestBootConfig  {
                                 parameterWithName("size").description("리스트 사이즈")),
                         responseFields(
                                 fieldWithPath("_links").type(JsonFieldType.OBJECT).description("<<resources-schedules-show-all-links,Schedules>> Resources"),
-                                fieldWithPath("_embedded.schedules").type(JsonFieldType.OBJECT).description("<<resource-schedules-show-one, Schedule>> Resources").optional(),
+                                fieldWithPath("_embedded.schedules").type(JsonFieldType.OBJECT).description("<<resources-schedules-show-one, Schedule>> Resource").optional(),
                                 fieldWithPath("page").type(JsonFieldType.OBJECT).description("Information On <<overview-pagination, Pagination>>"))));
     }
 
@@ -73,9 +75,9 @@ public class TestSchedulesRestController extends TestBootConfig  {
         this.mockMvc.perform(get("/schedules/{id}", schedule.getId()))
                 .andExpect(status().isOk())
                 .andDo(createSchedulesResultHandler(
-                        linkWithRel("self").description("현재정보링크"),
-                        linkWithRel("doctor").description("의사정보링크"),
-                        linkWithRel("patient").optional().description("환자정보링크")));
+                        linkWithRel("self").description("Self Rel Href"),
+                        linkWithRel("doctor").description("<<resources-doctors-show-one-response-fields, Doctor>> Rel Href"),
+                        linkWithRel("patient").optional().description("<<resources-patients-show-one-response-fields, Patient>> Rel Href")));
     }
 
     @Test
@@ -138,6 +140,20 @@ public class TestSchedulesRestController extends TestBootConfig  {
                 delete("/schedules/{id}", schedule.getId())
                         .contentType(MediaTypes.HAL_JSON))
                 .andDo(this.document.snippets(pathParameters(parameterWithName("id").description("스케쥴아이디"))))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void schedulesDoctor() throws Exception {
+        Schedule schedule = this.scheduleJpaRepository.findAll().get(0);
+        this.mockMvc.perform(get("/schedules/{id}/doctor", schedule.getId()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void schedulesPatient() throws Exception {
+        Schedule schedule = this.scheduleJpaRepository.findAll().get(0);
+        this.mockMvc.perform(get("/schedules/{id}/patient", schedule.getId()))
                 .andExpect(status().isOk());
     }
 

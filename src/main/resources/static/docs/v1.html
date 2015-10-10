@@ -702,7 +702,7 @@ Content-Type: application/hal+json
 Content-Length: 196
 
 {
-  "timestamp" : "2015-10-283 11:38:15",
+  "timestamp" : "2015-10-283 14:04:09",
   "status" : 400,
   "error" : "Bad Request",
   "message" : "The tag 'http://localhost:8080/doctors/123' does not exist",
@@ -1172,7 +1172,7 @@ Host: root-endpoint</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">_embedded.doctors</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-doctors-show-one">Doctor</a> Resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-doctors-show-one">Doctor</a> Resource</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
@@ -1384,7 +1384,7 @@ Host: root-endpoint</code></pre>
 <h5 id="response-structure-3">Response Structure</h5>
 <div class="sect5">
 <h6 id="response-fields-2">response-fields</h6>
-<table class="tableblock frame-all grid-all spread">
+<table id="resources-doctors-show-one-response-fields" class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 33%;">
@@ -1456,11 +1456,11 @@ Content-Length: 244
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">self</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">doctor_schedules</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">의사진료스케쥴</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-schedules-show-all-response-fields">Doctor Schedules</a> Rel Href</p></td>
 </tr>
 </tbody>
 </table>
@@ -1736,7 +1736,7 @@ Host: root-endpoint</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">_embedded.patients</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resource-patients-show-one">Patients</a> Resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-patients-show-one">Patient</a> Resource</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
@@ -1957,7 +1957,7 @@ Host: root-endpoint</code></pre>
 <h5 id="response-structure-6">Response Structure</h5>
 <div class="sect5">
 <h6 id="response-fields-4">response-fields</h6>
-<table class="tableblock frame-all grid-all spread">
+<table id="resources-patients-show-one-response-fields" class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 33%;">
@@ -2035,11 +2035,11 @@ Content-Length: 279
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">self</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">patient_schedules</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">환자진료스케쥴</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-schedules-show-all-response-fields">Patient Schedules</a> Rel Href</p></td>
 </tr>
 </tbody>
 </table>
@@ -2305,7 +2305,7 @@ Host: root-endpoint</code></pre>
 <h5 id="response-structure-8">Response Structure</h5>
 <div class="sect5">
 <h6 id="response-fields-5">response-fields</h6>
-<table class="tableblock frame-all grid-all spread">
+<table id="resources-schedules-show-all-response-fields" class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 33%;">
@@ -2327,7 +2327,7 @@ Host: root-endpoint</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">_embedded.schedules</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resource-schedules-show-one">Schedule</a> Resources</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-schedules-show-one">Schedule</a> Resource</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
@@ -2363,22 +2363,6 @@ Content-Length: 4497
   },
   "_embedded" : {
     "schedules" : [ {
-      "id" : 315,
-      "appointmentDay" : "2015-10-11",
-      "startTime" : "12:00",
-      "endTime" : "12:30",
-      "_links" : {
-        "self" : {
-          "href" : "http://root-endpoint:8080/schedules/315"
-        },
-        "doctor" : {
-          "href" : "http://root-endpoint:8080/schedules/315/doctor"
-        },
-        "patient" : {
-          "href" : "http://root-endpoint:8080/schedules/315/patient"
-        }
-      }
-    }, {
       "id" : 316,
       "appointmentDay" : "2015-10-11",
       "startTime" : "12:30",
@@ -2504,12 +2488,28 @@ Content-Length: 4497
           "href" : "http://root-endpoint:8080/schedules/324/doctor"
         }
       }
+    }, {
+      "id" : 326,
+      "appointmentDay" : "2015-10-12",
+      "startTime" : "10:30",
+      "endTime" : "11:00",
+      "_links" : {
+        "self" : {
+          "href" : "http://root-endpoint:8080/schedules/326"
+        },
+        "doctor" : {
+          "href" : "http://root-endpoint:8080/schedules/326/doctor"
+        },
+        "patient" : {
+          "href" : "http://root-endpoint:8080/schedules/326/patient"
+        }
+      }
     } ]
   },
   "page" : {
     "size" : 10,
-    "totalElements" : 8111,
-    "totalPages" : 812,
+    "totalElements" : 8104,
+    "totalPages" : 811,
     "number" : 2
   }
 }</code></pre>
@@ -2670,15 +2670,15 @@ Content-Length: 298
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">self</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Self Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">doctor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">의사정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-doctors-show-one-response-fields">Doctor</a> Rel Href</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">patient</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">환자정보링크</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#resources-patients-show-one-response-fields">Patient</a> Rel Href</p></td>
 </tr>
 </tbody>
 </table>

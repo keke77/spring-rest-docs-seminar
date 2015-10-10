@@ -19,6 +19,7 @@ include::{snippets}/schedules-show-all/request-parameters.adoc[]
 ===== Response Structure
 
 ====== response-fields
+[[resources-schedules-show-all-response-fields]]
 
 include::{snippets}/schedules-show-all/response-fields.adoc[]
 

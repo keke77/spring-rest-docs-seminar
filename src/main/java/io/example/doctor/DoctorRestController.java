@@ -84,7 +84,7 @@ public class DoctorRestController {
     }
 
     @RequestMapping(value = "/{id}/schedules", method = RequestMethod.GET)
-    public ResourceSupport showPropertyAll(@PathVariable("id") Long id) {
+    public ResourceSupport showSchdules(@PathVariable("id") Long id) {
         Doctor doctor = this.doctorJpaRepository.findOne(id);
         List<ScheduleResource> resources = this.scheduleResourceAssembler.toResources(doctor.getSchedules());
         return new NestedContentResource<ScheduleResource>(resources);

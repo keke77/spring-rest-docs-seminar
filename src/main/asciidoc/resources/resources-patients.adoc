@@ -48,6 +48,7 @@ include::{snippets}/patients-show-one/path-parameters.adoc[]
 ===== Response Structure
 
 ====== response-fields
+[[resources-patients-show-one-response-fields]]
 
 include::{snippets}/patients-show-one/response-fields.adoc[]
 
