@@ -84,7 +84,7 @@ public class DoctorRestController {
     @RequestMapping(value = "/{id}/schedules", method = RequestMethod.GET)
     public PagedResources<ScheduleResource> showSchdules(@PathVariable("id") Long id, @PageableDefault Pageable pageable) {
         Page<Schedule> schedules = this.scheduleJpaRepository.findByDoctorId(id, pageable);
-        return this.pagedResourcesAssembler.toResource(schedules);
+        return this.pagedResourcesAssembler.toResource(schedules, scheduleResourceAssembler);
     }
 
 }
