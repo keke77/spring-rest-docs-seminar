@@ -55,7 +55,7 @@ public class TestPatientsRestController extends TestBootConfig {
 
     @Test
     public void patientsShowOne() throws Exception {
-        Patient patient = this.patientJpaRepository.findAll().get(0);
+        Patient patient = this.patientJpaRepository.findAll().stream().filter(x -> x.getSchedules()!=null).findFirst().get();
         this.mockMvc.perform(get("/patients/{id}", patient.getId()))
                 .andExpect(status().isOk())
                 .andDo(createPatientsResultHandler(

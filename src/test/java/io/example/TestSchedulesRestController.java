@@ -71,7 +71,7 @@ public class TestSchedulesRestController extends TestBootConfig  {
 
     @Test
     public void schedulesShowOne() throws Exception {
-        Schedule schedule = this.scheduleJpaRepository.findAll().get(0);
+        Schedule schedule = this.scheduleJpaRepository.findAll().stream().filter(x -> x.getPatient()!=null).findFirst().get();
         this.mockMvc.perform(get("/schedules/{id}", schedule.getId()))
                 .andExpect(status().isOk())
                 .andDo(createSchedulesResultHandler(

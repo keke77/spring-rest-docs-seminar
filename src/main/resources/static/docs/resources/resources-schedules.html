@@ -668,8 +668,8 @@ Content-Length: 4497
   },
   "page" : {
     "size" : 10,
-    "totalElements" : 8106,
-    "totalPages" : 811,
+    "totalElements" : 8112,
+    "totalPages" : 812,
     "number" : 2
   }
 }</code></pre>
@@ -713,7 +713,7 @@ Content-Length: 4497
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-http" data-lang="http">GET /schedules/295 HTTP/1.1
+<pre class="highlightjs highlight"><code class="language-http" data-lang="http">GET /schedules/297 HTTP/1.1
 Host: root-endpoint</code></pre>
 </div>
 </div>
@@ -795,19 +795,22 @@ Host: root-endpoint</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/hal+json
-Content-Length: 298
+Content-Length: 391
 
 {
-  "id" : 295,
+  "id" : 297,
   "appointmentDay" : "2015-10-10",
-  "startTime" : "09:00",
-  "endTime" : "09:30",
+  "startTime" : "10:00",
+  "endTime" : "10:30",
   "_links" : {
     "self" : {
-      "href" : "http://root-endpoint:8080/schedules/295"
+      "href" : "http://root-endpoint:8080/schedules/297"
     },
     "doctor" : {
-      "href" : "http://root-endpoint:8080/schedules/295/doctor"
+      "href" : "http://root-endpoint:8080/schedules/297/doctor"
+    },
+    "patient" : {
+      "href" : "http://root-endpoint:8080/schedules/297/patient"
     }
   }
 }</code></pre>
