@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import io.example.doctor.Doctor;
 import io.example.doctor.DoctorJpaRepository;
+import io.example.patient.Patient;
+import io.example.patient.PatientJpaRepository;
 import io.example.schedule.Schedule;
 import io.example.schedule.ScheduleJpaRepository;
 import org.junit.Test;
@@ -39,6 +41,9 @@ public class TestSchedulesRestController extends TestBootConfig  {
     private DoctorJpaRepository doctorJpaRepository;
 
     @Autowired
+    private PatientJpaRepository patientJpaRepository;
+
+    @Autowired
     private ScheduleJpaRepository scheduleJpaRepository;
 
     @Autowired
@@ -69,18 +74,20 @@ public class TestSchedulesRestController extends TestBootConfig  {
                 .andExpect(status().isOk())
                 .andDo(createSchedulesResultHandler(
                         linkWithRel("self").description("현재정보링크"),
-                        linkWithRel("doctor").description("의사정보"),
-                        linkWithRel("patient").optional().description("환자정보")));
+                        linkWithRel("doctor").description("의사정보링크"),
+                        linkWithRel("patient").optional().description("환자정보링크")));
     }
 
     @Test
     public void schedulesCreate() throws Exception {
         Doctor doctor = this.doctorJpaRepository.findAll().get(0);
+        Patient patient = this.patientJpaRepository.findAll().get(0);
         Map<String, String> create = Maps.newHashMap();
         create.put("appointmentDay", "9991-12-31");
         create.put("startTime", "09:00");
         create.put("endTime", "09:30");
         create.put("doctorId", Long.toString(doctor.getId()));
+        create.put("patientId", Long.toString(patient.getId()));
         this.mockMvc.perform(
                 put("/schedules")
                         .contentType(MediaTypes.HAL_JSON)
@@ -91,7 +98,8 @@ public class TestSchedulesRestController extends TestBootConfig  {
                                 fieldWithPath("appointmentDay").type(JsonFieldType.STRING).description("진료일(yyyy-MM-DD)"),
                                 fieldWithPath("startTime").type(JsonFieldType.STRING).description("진료시작시간(HH:mm)"),
                                 fieldWithPath("endTime").type(JsonFieldType.STRING).description("진료종료시간(HH:mm)"),
-                                fieldWithPath("doctorId").type(JsonFieldType.STRING).description("의사아이디")),
+                                fieldWithPath("doctorId").type(JsonFieldType.STRING).description("의사아이디"),
+                                fieldWithPath("patientId").type(JsonFieldType.STRING).optional().description("환자아이디")),
                         responseHeaders(
                             headerWithName("Location").description("신규 생성된 자원 주소"))))
                 .andReturn().getResponse().getHeader("Location");
@@ -99,18 +107,26 @@ public class TestSchedulesRestController extends TestBootConfig  {
 
     @Test
     public void schedulesUpdate() throws Exception {
+        Doctor doctor = this.doctorJpaRepository.findAll().get(0);
+        Patient patient = this.patientJpaRepository.findAll().get(0);
         Schedule schedule = this.scheduleJpaRepository.findAll().get(0);
         Map<String, String> update = Maps.newHashMap();
+        update.put("appointmentDay", "9991-12-31");
         update.put("startTime", "10:00");
         update.put("endTime", "10:30");
+        update.put("doctorId", Long.toString(doctor.getId()));
+        update.put("patientId", Long.toString(patient.getId()));
         this.mockMvc.perform(
                 patch("/schedules/{id}", schedule.getId())
                         .contentType(MediaTypes.HAL_JSON)
                         .content(this.objectMapper.writeValueAsString(update)))
                 .andDo(this.document.snippets(
                         requestFields(
+                                fieldWithPath("appointmentDay").type(JsonFieldType.STRING).description("진료일(yyyy-MM-DD)"),
                                 fieldWithPath("startTime").type(JsonFieldType.STRING).description("진료시작시간(HH:mm)"),
-                                fieldWithPath("endTime").type(JsonFieldType.STRING).description("진료종료시간(HH:mm)")),
+                                fieldWithPath("endTime").type(JsonFieldType.STRING).description("진료종료시간(HH:mm)"),
+                                fieldWithPath("doctorId").type(JsonFieldType.STRING).description("의사아이디"),
+                                fieldWithPath("patientId").type(JsonFieldType.STRING).optional().description("환자아이디")),
                         pathParameters(parameterWithName("id").description("스케쥴아이디"))))
                 .andExpect(status().isNoContent());
     }

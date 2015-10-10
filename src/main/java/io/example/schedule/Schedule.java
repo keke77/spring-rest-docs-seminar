@@ -1,17 +1,15 @@
 package io.example.schedule;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.example.common.AbstractPersistable;
 import io.example.common.LocalDateToDateConverter;
 import io.example.common.LocalTimeToTimeConverter;
 import io.example.doctor.Doctor;
 import io.example.patient.Patient;
-import io.example.common.AbstractPersistable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.convert.JodaTimeConverters;
 
 import javax.persistence.*;
 import java.io.Serializable;
