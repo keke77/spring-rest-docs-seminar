@@ -18,7 +18,7 @@ public class WebBootConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-	 * bean을 선언 하면 부트 서블릿 필터에 등록 되지 않음
+	 * OpenEntityManagerInViewInterceptor 선언 하면 부트 서블릿 필터에 등록 되지 않음
 	 * @return
 	 */
 	@Bean
