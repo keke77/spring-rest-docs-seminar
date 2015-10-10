@@ -25,7 +25,9 @@ public class ScheduleResourceAssembler extends ResourceAssemblerSupport<Schedule
         }
         ScheduleResource resource = createResourceWithId(schedule.getId(), schedule);
         resource.add(linkTo(ScheduleRestController.class).slash(schedule.getId()).slash("doctor").withRel("doctor"));
-        resource.add(linkTo(ScheduleRestController.class).slash(schedule.getId()).slash("patient").withRel("patient"));
+        if(schedule.getPatient()!=null) {
+            resource.add(linkTo(ScheduleRestController.class).slash(schedule.getId()).slash("patient").withRel("patient"));
+        }
         return resource;
     }
 

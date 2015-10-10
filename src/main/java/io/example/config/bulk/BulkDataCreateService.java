@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
@@ -38,8 +39,7 @@ public class BulkDataCreateService {
         IntStream.range(startInclusive, endExclusive).forEach(x -> {
             Doctor doctor = new Doctor();
             doctor.setName("doctor_name_"+x);
-            Doctor entity = this.doctorJpaRepository.save(doctor);
-            log.debug(entity.toString());
+            this.doctorJpaRepository.save(doctor);
         });
     }
 
@@ -49,8 +49,7 @@ public class BulkDataCreateService {
             Patient patient = new Patient();
             patient.setName("patient_name_"+x);
             patient.setBirthDate(LocalDate.now().minusYears(x).minusMonths(x).minusDays(x));
-            Patient entity = this.patientJpaRepository.save(patient);
-            log.debug(entity.toString());
+            this.patientJpaRepository.save(patient);
         });
     }
 
@@ -60,16 +59,19 @@ public class BulkDataCreateService {
         List<LocalDateTime> scheduleCalendar = scheduleCalendar();
 
         List<Doctor> doctors = this.doctorJpaRepository.findAll();
+        List<Patient> patients = this.patientJpaRepository.findAll();
 
         doctors.forEach(doctor -> {
             scheduleCalendar.forEach(dateTime -> {
                 Schedule schedule = new Schedule();
-                schedule.setDoctor(doctor);
                 schedule.setAppointmentDay(dateTime.toLocalDate());
                 schedule.setStartTime(dateTime.toLocalTime());
                 schedule.setEndTime(dateTime.plusMinutes(30).toLocalTime());
-                Schedule entity = this.scheduleJpaRepository.save(schedule);
-                log.debug(entity.toString());
+                schedule.setDoctor(doctor);
+                if(dateTime.getHour()%2==0) {
+                    schedule.setPatient(patients.get(new Random().nextInt(patients.size())));
+                }
+                this.scheduleJpaRepository.save(schedule);
             });
         });
     }

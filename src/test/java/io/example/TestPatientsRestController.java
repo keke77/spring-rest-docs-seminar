@@ -64,7 +64,7 @@ public class TestPatientsRestController extends TestBootConfig {
                 .andExpect(status().isOk())
                 .andDo(createPatientsResultHandler(
                         linkWithRel("self").description("현재정보링크"),
-                        linkWithRel("patient_schedules").description("환자진료스케쥴")));
+                        linkWithRel("patient_schedules").optional().description("환자진료스케쥴")));
     }
 
     @Test
